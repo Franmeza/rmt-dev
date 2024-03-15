@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Background from "./Background";
 import Container from "./Container";
 import Footer from "./Footer";
@@ -6,30 +6,12 @@ import Header from "./Header";
 import SearchForm from "./SearchForm";
 import BookmarksButton from "./BookmarksButton";
 import Logo from "./Logo";
+import useJobItems from "../hooks/useJobItems";
 
 function App() {
   const [searchText, setSearchText] = useState("");
-  const [jobItems, setJobItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { jobItems, isLoading } = useJobItems(searchText);
 
-  useEffect(() => {
-    if (!searchText) return;
-
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(
-          `https://bytegrad.com/course-assets/projects/rmtdev/api/data?search=${searchText}`
-        );
-        const data = await res.json();
-        setIsLoading(false);
-        setJobItems(data.jobItems);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [searchText]);
   return (
     <>
       <Background />
