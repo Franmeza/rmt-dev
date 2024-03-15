@@ -10,7 +10,7 @@ import useJobItems from "../hooks/useJobItems";
 
 function App() {
   const [searchText, setSearchText] = useState("");
-  const { jobItems, isLoading } = useJobItems(searchText);
+  const { jobItemsSliced: jobItems, isLoading } = useJobItems(searchText);
 
   return (
     <>

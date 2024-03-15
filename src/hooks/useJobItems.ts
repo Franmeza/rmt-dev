@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { TJobItems } from "../utils/types";
 
 export default function useJobItems(searchText: string) {
-  const [jobItems, setJobItems] = useState([]);
+  const [jobItems, setJobItems] = useState<TJobItems[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const jobItemsSliced = jobItems.slice(0, 7);
 
   useEffect(() => {
     if (!searchText) return;
@@ -22,8 +25,9 @@ export default function useJobItems(searchText: string) {
     };
     fetchData();
   }, [searchText]);
+
   return {
-    jobItems,
+    jobItemsSliced,
     isLoading,
   };
 }
