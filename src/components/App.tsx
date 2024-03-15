@@ -10,16 +10,19 @@ import Logo from "./Logo";
 function App() {
   const [searchText, setSearchText] = useState("");
   const [jobItems, setJobItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!searchText) return;
 
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const res = await fetch(
           `https://bytegrad.com/course-assets/projects/rmtdev/api/data?search=${searchText}`
         );
         const data = await res.json();
+        setIsLoading(false);
         setJobItems(data.jobItems);
       } catch (error) {
         console.log(error);
@@ -37,7 +40,7 @@ function App() {
         </div>
         <SearchForm setSearchText={setSearchText} searchText={searchText} />
       </Header>
-      <Container jobItems={jobItems} />
+      <Container jobItems={jobItems} isLoading={isLoading} />
       <Footer />
     </>
   );
