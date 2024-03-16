@@ -10,10 +10,11 @@ type SideBarProps = {
 };
 
 export default function Sidebar({ jobItems, isLoading }: SideBarProps) {
+  const resultsCount = jobItems.length;
   return (
     <div className="sidebar">
       <div className="sidebar__top">
-        <ResultsCount />
+        <ResultsCount resultsCount={resultsCount} />
         <SortingControls />
       </div>
       <JobList jobItems={jobItems} isLoading={isLoading} />
