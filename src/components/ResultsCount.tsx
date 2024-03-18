@@ -3,5 +3,9 @@ type ResultsCountProps = {
 };
 
 export default function ResultsCount({ resultsCount }: ResultsCountProps) {
-  return <p className="count">{resultsCount} results</p>;
+  return (
+    <p className="count">
+      <span className="u-bold">{resultsCount}</span> results
+    </p>
+  );
 }

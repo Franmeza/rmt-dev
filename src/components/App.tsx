@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Background from "./Background";
 import Container from "./Container";
 import Footer from "./Footer";
@@ -7,10 +7,12 @@ import SearchForm from "./SearchForm";
 import BookmarksButton from "./BookmarksButton";
 import Logo from "./Logo";
 import useJobItems from "../hooks/useJobItems";
+import useDebounce from "../hooks/useDebounce";
 
 function App() {
   const [searchText, setSearchText] = useState("");
-  const { jobItemsSliced: jobItems, isLoading } = useJobItems(searchText);
+  const debouncedValue = useDebounce(searchText, 500);
+  const { jobItemsSliced: jobItems, isLoading } = useJobItems(debouncedValue);
 
   return (
     <>
