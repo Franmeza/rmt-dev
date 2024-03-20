@@ -13,7 +13,7 @@ export default function useJobItem() {
       staleTime: 1000 * 60 * 60, //time duration of the cache
       refetchOnWindowFocus: false, // fetch again when going back to the window
       retry: false, //retry fetching if something went wrong
-      enabled: Boolean(id), // enable use query depending of an id
+      enabled: Boolean(id), // run the query only if there's an id
       onError: (error) => {
         // Handle error if there's one
         console.log(error);

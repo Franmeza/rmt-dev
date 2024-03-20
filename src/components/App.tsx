@@ -14,7 +14,7 @@ function App() {
   const debouncedValue = useDebounce(searchText, 500);
   const { jobItems, isLoading } = useJobItems(debouncedValue);
 
-  const jobItemsSliced = jobItems.slice(0, 7);
+  const jobItemsSliced = jobItems?.slice(0, 7) || [];
   return (
     <>
       <Background />

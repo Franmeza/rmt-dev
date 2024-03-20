@@ -3,7 +3,7 @@ import JobListItem from "./JobListItem";
 import Spinner from "./Spinner";
 
 type JobListProps = {
-  jobItems: TJobItems[];
+  jobItems: TJobItems[] | undefined;
   isLoading: boolean;
 };
 export function JobList({ jobItems, isLoading }: JobListProps) {
@@ -11,7 +11,7 @@ export function JobList({ jobItems, isLoading }: JobListProps) {
     <ul className="job-list">
       {isLoading && <Spinner />}
       {!isLoading &&
-        jobItems.map((jobItem) => (
+        jobItems?.map((jobItem) => (
           <JobListItem key={jobItem.id} jobItem={jobItem} />
         ))}
     </ul>

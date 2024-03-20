@@ -10,7 +10,7 @@ type SideBarProps = {
 };
 
 export default function Sidebar({ jobItems, isLoading }: SideBarProps) {
-  const resultsCount = jobItems.length;
+  const resultsCount = jobItems?.length || 0;
   return (
     <div className="sidebar">
       <div className="sidebar__top">
