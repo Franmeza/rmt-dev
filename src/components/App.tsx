@@ -12,8 +12,9 @@ import useDebounce from "../hooks/useDebounce";
 function App() {
   const [searchText, setSearchText] = useState("");
   const debouncedValue = useDebounce(searchText, 500);
-  const { jobItemsSliced: jobItems, isLoading } = useJobItems(debouncedValue);
+  const { jobItems, isLoading } = useJobItems(debouncedValue);
 
+  const jobItemsSliced = jobItems.slice(0, 7);
   return (
     <>
       <Background />
@@ -24,7 +25,7 @@ function App() {
         </div>
         <SearchForm setSearchText={setSearchText} searchText={searchText} />
       </Header>
-      <Container jobItems={jobItems} isLoading={isLoading} />
+      <Container jobItems={jobItemsSliced} isLoading={isLoading} />
       <Footer />
     </>
   );
