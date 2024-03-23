@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import getJobItemsList from "../api-requests/getJobItemsList";
+import { handleErrors } from "../utils/handleErrors";
 
 export default function useJobItems(searchText: string) {
   // const [jobItems, setJobItems] = useState<TJobItems[]>([]);
@@ -31,9 +32,7 @@ export default function useJobItems(searchText: string) {
       refetchOnWindowFocus: false,
       retry: false,
       enabled: Boolean(searchText),
-      onError: (error) => {
-        console.log(error);
-      },
+      onError: handleErrors,
     }
   );
 

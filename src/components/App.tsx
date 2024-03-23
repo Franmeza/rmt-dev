@@ -8,6 +8,7 @@ import BookmarksButton from "./BookmarksButton";
 import Logo from "./Logo";
 import useJobItems from "../hooks/useJobItems";
 import useDebounce from "../hooks/useDebounce";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [searchText, setSearchText] = useState("");
@@ -27,6 +28,7 @@ function App() {
       </Header>
       <Container jobItems={jobItemsSliced} isLoading={isLoading} />
       <Footer />
+      <Toaster position={"top-right"} />
     </>
   );
 }
