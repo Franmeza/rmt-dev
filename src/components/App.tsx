@@ -9,6 +9,13 @@ import Logo from "./Logo";
 import useJobItems from "../hooks/useJobItems";
 import useDebounce from "../hooks/useDebounce";
 import { Toaster } from "react-hot-toast";
+import { RESULTS_PER_PAGE } from "../utils/constants";
+import Sidebar, { SidebarTop } from "./Sidebar";
+import JobItemContent from "./JobItemContent";
+import ResultsCount from "./ResultsCount";
+import SortingControls from "./SortingControls";
+import JobList from "./JobList";
+import PaginationControls from "./PaginationControls";
 
 function App() {
   const [searchText, setSearchText] = useState("");
@@ -18,7 +25,10 @@ function App() {
   const totalNumberResults = jobItems?.length || 0;
   const totalNumberOfPages = totalNumberResults / 7;
   const jobItemsSliced =
-    jobItems?.slice(currentPage * 7 - 7, currentPage * 7) || [];
+    jobItems?.slice(
+      currentPage * RESULTS_PER_PAGE - RESULTS_PER_PAGE,
+      currentPage * RESULTS_PER_PAGE
+    ) || [];
 
   const handleChangePage = (direction: "next" | "previous") => {
     if (direction === "next") {
@@ -37,14 +47,21 @@ function App() {
         </div>
         <SearchForm setSearchText={setSearchText} searchText={searchText} />
       </Header>
-      <Container
-        jobItems={jobItemsSliced}
-        isLoading={isLoading}
-        handleChangePage={handleChangePage}
-        currentPage={currentPage}
-        totalNumberResults={totalNumberResults}
-        totalNumberOfPages={totalNumberOfPages}
-      />
+      <Container>
+        <Sidebar>
+          <SidebarTop>
+            <ResultsCount resultsCount={totalNumberResults} />
+            <SortingControls />
+          </SidebarTop>
+          <JobList jobItems={jobItemsSliced} isLoading={isLoading} />
+          <PaginationControls
+            onChangePage={handleChangePage}
+            currentPage={currentPage}
+            totalNumberOfPages={totalNumberOfPages}
+          />
+        </Sidebar>
+        <JobItemContent />
+      </Container>
       <Footer />
       <Toaster position={"top-right"} />
     </>
