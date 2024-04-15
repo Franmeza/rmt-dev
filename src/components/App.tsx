@@ -27,7 +27,7 @@ function App() {
 
   const totalNumberResults = jobItems?.length || 0;
   const totalNumberOfPages = totalNumberResults / 7;
-  const sortedJobItems = jobItems?.sort((a, b) => {
+  const sortedJobItems = [...(jobItems || [])].sort((a, b) => {
     if (sortBy === "relevant") {
       return b.relevanceScore - a.relevanceScore;
     } else {
@@ -35,11 +35,10 @@ function App() {
     }
   });
 
-  const jobItemsSliced =
-    sortedJobItems?.slice(
-      currentPage * RESULTS_PER_PAGE - RESULTS_PER_PAGE,
-      currentPage * RESULTS_PER_PAGE
-    ) || [];
+  const jobItemsSliced = sortedJobItems?.slice(
+    currentPage * RESULTS_PER_PAGE - RESULTS_PER_PAGE,
+    currentPage * RESULTS_PER_PAGE
+  );
 
   const handleSorting = (sortBy: TSortBy) => {
     setSortBy(sortBy);
