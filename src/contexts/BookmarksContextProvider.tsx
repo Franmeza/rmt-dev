@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 type BookMarksContext = {
@@ -8,7 +8,11 @@ type BookMarksContext = {
 
 export const BookmarksContext = createContext<BookMarksContext | null>(null);
 
-function BookmarksContextProvider({ children }: { children: React.ReactNode }) {
+export function BookmarksContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [bookmarkIds, setBookmarksIds] = useLocalStorage<number[]>(
     "bookmarksIds",
     []
@@ -33,4 +37,13 @@ function BookmarksContextProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default BookmarksContextProvider;
+export const useBookmarksContext = () => {
+  const context = useContext(BookmarksContext);
+
+  if (!context) {
+    throw new Error(
+      "useContext must be used within a BookmarksContextProvider"
+    );
+  }
+  return context;
+};
