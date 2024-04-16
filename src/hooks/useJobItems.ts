@@ -1,43 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
-import getJobItemsList from "../api-requests/getJobItemsList";
+import { useQueries } from "@tanstack/react-query";
+import getJobItem from "../api-requests/getJobItem";
 import { handleErrors } from "../utils/handleErrors";
+import { TJobItem } from "../utils/types";
 
-export default function useJobItems(searchText: string) {
-  // const [jobItems, setJobItems] = useState<TJobItems[]>([]);
-  // const [isLoading, setIsLoading] = useState(false);
-
-  // useEffect(() => {
-  //   if (!searchText) return;
-
-  //   const fetchData = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const res = await fetch(`${BASE_API_URL}?search=${searchText}`);
-  //       const data = await res.json();
-  //       setIsLoading(false);
-  //       setJobItems(data.jobItems);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [searchText]);
-
-  const { data, isInitialLoading } = useQuery(
-    ["job-items", searchText],
-    () => getJobItemsList(searchText),
-
-    {
+export const useJobItems = (ids: number[]) => {
+  //multiple network requests in parallel
+  const results = useQueries({
+    queries: ids.map((id) => ({
+      queryKey: ["job-item", id],
+      queryFn: () => getJobItem(id),
       staleTime: 1000 * 60 * 60,
       refetchOnWindowFocus: false,
       retry: false,
-      enabled: Boolean(searchText),
+      enabled: Boolean(id),
       onError: handleErrors,
-    }
-  );
+    })),
+  });
 
-  return {
-    jobItems: data?.jobItems,
-    isLoading: isInitialLoading,
-  };
-}
+  const jobItems = results
+    .map((result) => result.data?.jobItem)
+    .filter((jobItem) => jobItem !== undefined) as TJobItem[];
+
+  const isLoading = results.some((result) => result.isLoading);
+  return { jobItems, isLoading };
+};
