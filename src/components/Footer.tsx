@@ -2,17 +2,11 @@ export default function Footer() {
   return (
     <footer className="footer">
       <small>
-        <p>
-          © Copyright by{" "}
-          <a href="https://bytegrad.com" target="_blank">
-            ByteGrad.com
-          </a>
-          . Intended for learning or your portfolio.
-        </p>
+        <p>Implemented by: Francisco Meza</p>
       </small>
 
       <p>
-        <span className="u-bold">109573</span> total jobs available
+        <span> Intended for learning and my portfolio.</span>
       </p>
     </footer>
   );
