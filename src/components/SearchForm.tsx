@@ -1,15 +1,7 @@
-type SearchFormProps = {
-  setSearchText: (text: string) => void;
-  searchText: string;
-};
+import { useSearchTextContext } from "../contexts/SearchTextContextProvider";
 
-export default function SearchForm({
-  setSearchText,
-  searchText,
-}: SearchFormProps) {
-  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
+export default function SearchForm() {
+  const { handleSearchText, searchText } = useSearchTextContext();
   return (
     <form onSubmit={(e) => e.preventDefault()} action="#" className="search">
       <button type="submit">
@@ -17,7 +9,7 @@ export default function SearchForm({
       </button>
 
       <input
-        onChange={handleChange}
+        onChange={(e) => handleSearchText(e.target.value)}
         value={searchText}
         spellCheck="false"
         type="text"
