@@ -3,9 +3,10 @@ import JobListItem from "./JobListItem";
 import Spinner from "./Spinner";
 
 type JobListProps = {
-  jobItems: TJobItems[] | undefined;
+  jobItems: TJobItems[];
   isLoading: boolean;
 };
+
 export function JobList({ jobItems, isLoading }: JobListProps) {
   return (
     <ul className="job-list">
